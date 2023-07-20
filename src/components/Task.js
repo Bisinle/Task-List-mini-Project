@@ -4,13 +4,9 @@ function Task({ task, deletList }) {
   const { text, category, id } = task;
   // console.log(index);
 
-
-  
   function deleteHandle(id) {
     deletList(id);
   }
-
-
 
   return (
     <div className="task">

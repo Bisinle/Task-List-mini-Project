@@ -2,41 +2,31 @@ import React from "react";
 import Task from "./Task";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-function TaskList({ tasks }) {
-  // console.log(tasks);
-  const [TaskListState, setTaskListState] = useState(tasks);
-
-  //map through the tasks array and send each objecct to TASK returning an array of spans
-  const task = TaskListState.map((task) => {
-    //copy the tasks objects and add an id key to with value set to the object index
-    const newTaskObject = { ...task, id: uuidv4() };
-    console.log(newTaskObject.id);
-    return (
-      <span key={newTaskObject.id}>
-        <Task task={newTaskObject} deletList={deletList} />
-      </span>
-    );
+export default function TaskList({ tasks }) {
+  //give each task an  unique ID
+  const tasksWithId = tasks.map((task) => {
+    return { ...task, id: uuidv4() };
   });
+  //initialize the state with tasksWithID
+  const [TaskListState, setTaskListState] = useState(tasksWithId);
 
+  //filter the TaskListState depending on the ID that was sent from the Task component
   function deletList(id) {
-    // console.log(id);
-    const taskCopy = [...task];
-    // console.log(taskCopy[id].key);
-    const filtered = taskCopy.filter(
-      (thisObject) => thisObject.props.children.props.task.id != id
-    );
-    console.log(filtered);
+    console.log(id);
+    const filtered = TaskListState.filter((thisTask) => thisTask.id !== id);
     setTaskListState(filtered);
   }
+  console.log(TaskListState);
 
-  /**function deletList(id) {
-  const updatedTasks = task.filter((taskSpan) => taskSpan.key !== id.toString());
-  setTaskListState(updatedTasks.map((taskSpan, index) => React.cloneElement(taskSpan, { key: index })));
+  return (
+    <div className="tasks">
+      {TaskListState.map((currentTask) => {
+        return (
+          <span key={currentTask.id}>
+            <Task task={currentTask} deletList={deletList} />
+          </span>
+        );
+      })}
+    </div>
+  );
 }
- */
-  console.log(task);
-  return <div className="tasks">{task}</div>;
-}
-
-export default TaskList;
