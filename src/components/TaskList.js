@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Task from "./Task";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid"; //for generating unique IDs
 export default function TaskList({ tasks, ReceiveCategory }) {
-  //give each task an  unique ID
-  const tasksWithId = tasks.map((task) => {
-    return { ...task, id: uuidv4() };
-  });
+  console.log(tasks);
   //initialize the state with tasksWithID
-  const [TaskListState, setTaskListState] = useState(tasksWithId);
+  const [TaskListState, setTaskListState] = useState([]);
   const [category, setcategory] = useState("All");
+
+  useEffect(() => {
+    //give each task an  unique ID
+    const tasksWithId = tasks.map((task) => {
+      // console.log(task);
+      return { ...task, id: uuidv4() };
+    });
+    setTaskListState(tasksWithId);
+  }, [tasks]);
+
+  console.log(TaskListState);
 
   //map through our list and then display what the Task component returns
   const taskList = TaskListState.map((currentTask) => {
@@ -48,7 +56,6 @@ export default function TaskList({ tasks, ReceiveCategory }) {
     const filtered = TaskListState.filter((thisTask) => thisTask.id !== id);
     setTaskListState(filtered);
   }
-  // console.log(TaskListState);
 
   return (
     <div className="tasks">

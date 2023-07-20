@@ -2,13 +2,14 @@ import React from "react";
 import { useState } from "react";
 import TaskList from "./TaskList";
 
-function CategoryFilter({ CATEGORIES, categoryTransport }) {
+function CategoryFilter({ CATEGORIES, takeCategoryFromCLtoTL }) {
   const [SelectedCategory, setSelectedCategory] = useState(null);
 
   // console.log(CATEGORIES);
   function btnHandle(category) {
     setSelectedCategory(category);
-    categoryTransport(category);
+    //CL = categoryList   //TL = TaskList
+    takeCategoryFromCLtoTL(category);
   }
 
   return (
