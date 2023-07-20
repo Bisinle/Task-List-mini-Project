@@ -16,11 +16,15 @@ function NewTaskForm({ CATEGORIES, onTaskFormSubmit }) {
 
   function formSubmitHandle(e) {
     e.preventDefault();
-    onTaskFormSubmit(TaskInput);
-    setTaskInput({
-      text: "",
-      category: "",
-    });
+    if (TaskInput.category === "All" || TaskInput.category === "") {
+      alert("Choose a category please");
+    } else {
+      onTaskFormSubmit(TaskInput);
+      setTaskInput({
+        text: "",
+        category: "",
+      });
+    }
   }
 
   const categoryOptions = CATEGORIES.map((category) => (
@@ -38,7 +42,7 @@ function NewTaskForm({ CATEGORIES, onTaskFormSubmit }) {
           onChange={inputHandle}
           required
         />
-      </label> 
+      </label>
       <label>
         Category
         <select
