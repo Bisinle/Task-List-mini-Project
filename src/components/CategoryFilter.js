@@ -1,31 +1,31 @@
 import React from "react";
 import { useState } from "react";
+import TaskList from "./TaskList";
 
-function CategoryFilter({ CATEGORIES }) {
+function CategoryFilter({ CATEGORIES, categoryTransport }) {
   const [SelectedCategory, setSelectedCategory] = useState(null);
-  const [buttonClassName, setButtonClassName] = useState("");
+
   // console.log(CATEGORIES);
   function btnHandle(category) {
     setSelectedCategory(category);
+    categoryTransport(category);
   }
 
-
-  const categoryButtons = CATEGORIES.map((category) => {
-    return (
-      <button
-        className={category === SelectedCategory ? "selected" : ""}
-        key={category}
-        onClick={() => btnHandle(category)}
-      >
-        {category}
-      </button>
-    );
-  });
   return (
     <div className="categories">
       <h5>Category filters</h5>
 
-      {categoryButtons}
+      {CATEGORIES.map((category) => {
+        return (
+          <button
+            className={category === SelectedCategory ? "selected" : ""}
+            key={category}
+            onClick={() => btnHandle(category)}
+          >
+            {category}
+          </button>
+        );
+      })}
     </div>
   );
 }

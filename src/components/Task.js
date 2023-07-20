@@ -1,11 +1,11 @@
 import React from "react";
 
-function Task({ task, deletList }) {
-  const { text, category, id } = task;
+function Task({ text, category, id, deleteTaskItem }) {
   // console.log(index);
 
   function deleteHandle(id) {
-    deletList(id);
+    deleteTaskItem(id);
+    console.log(id);
   }
 
   return (
